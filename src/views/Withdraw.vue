@@ -4,7 +4,7 @@ import HeaderCross from "@/components/Utilities/HeaderCross.vue";
 import Withdraw_Tron from '../components/Pages/Withdraw_Tron.vue';
 import Deposit_Tabbar from "@/components/Blocks/Deposit_Tabbar.vue";
 import IconArrowR from '@/components/Icons/icon-arrow-r.vue'
-import IconTemplate from '@/components/Icons/iconTemplate.vue'
+import IconTemplate from '@/components/Icons/IconTemplate.vue'
 import { useI18n } from "vue-i18n";
 import { treasureChest } from '@/components/Images/base64'
 
