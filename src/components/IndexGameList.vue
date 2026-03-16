@@ -102,7 +102,23 @@ onUnmounted(() => {
                     <div>{{ gameItem.title }}</div>
                     <span class="games-item-cd">{{ gameItem.sub_title }}</span>
                   </div>
-                  <van-image :src="gameItem.image" />
+                  <van-image :src="gameItem.image">
+                    <template #loading>
+                      <div class="game-skeleton">
+                        <div class="game-skeleton__shine"></div>
+                        <div class="game-skeleton__icon">
+                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 16.5C21 17.33 20.33 18 19.5 18h-15C3.67 18 3 17.33 3 16.5v-9C3 6.67 3.67 6 4.5 6h15c.83 0 1.5.67 1.5 1.5v9z" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M3 9h18M7 13h1m3 0h1m3 0h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                          </svg>
+                        </div>
+                        <div class="game-skeleton__bars">
+                          <div class="game-skeleton__bar" style="width: 60%"></div>
+                          <div class="game-skeleton__bar" style="width: 40%"></div>
+                        </div>
+                      </div>
+                    </template>
+                  </van-image>
                 </div>
                 <div class="online">
                   <img
@@ -324,6 +340,98 @@ onUnmounted(() => {
   }
   20%, 100% {
     left: 100%;
+  }
+}
+
+// 骨架屏樣式
+.game-skeleton {
+  width: 2.93333rem;
+  height: 4.16rem;
+  border-radius: 0.26667rem;
+  background: linear-gradient(
+    135deg,
+    rgba(44, 27, 62, 0.9) 0%,
+    rgba(58, 38, 80, 0.9) 50%,
+    rgba(44, 27, 62, 0.9) 100%
+  );
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.32rem;
+
+  // 流光掃描效果
+  &__shine {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(240, 205, 79, 0.12) 50%,
+      rgba(255, 255, 255, 0.06) 55%,
+      transparent 70%
+    );
+    animation: skeletonScan 1.8s ease-in-out infinite;
+  }
+
+  // 中央圖示
+  &__icon {
+    width: 1.06667rem;
+    height: 1.06667rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(240, 205, 79, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: skeletonPulse 1.8s ease-in-out infinite;
+
+    svg {
+      width: 0.56rem;
+      height: 0.56rem;
+      color: rgba(240, 205, 79, 0.35);
+    }
+  }
+
+  // 底部文字骨架條
+  &__bars {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.16rem;
+    width: 80%;
+  }
+
+  &__bar {
+    height: 0.21333rem;
+    border-radius: 0.10667rem;
+    background: rgba(255, 255, 255, 0.08);
+    animation: skeletonPulse 1.8s ease-in-out infinite;
+    margin: 0 auto;
+
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+  }
+}
+
+@keyframes skeletonScan {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes skeletonPulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
   }
 }
 </style>
