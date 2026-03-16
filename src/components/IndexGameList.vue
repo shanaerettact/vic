@@ -283,15 +283,6 @@ onUnmounted(() => {
       overflow: hidden;
     }
   }
-}
-
-@keyframes cardShimmer {
-  0% {
-    left: -100%;
-  }
-  20%, 100% {
-    left: 100%;
-  }
 
   &-item-text {
     position: absolute;
@@ -325,6 +316,14 @@ onUnmounted(() => {
       font-weight: 700;
     }
   }
+}
 
+@keyframes cardShimmer {
+  0% {
+    left: -100%;
+  }
+  20%, 100% {
+    left: 100%;
+  }
 }
 </style>
