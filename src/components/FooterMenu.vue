@@ -125,14 +125,16 @@ const list = computed(() => [
   position: fixed;
   display: flex;
   width: 100%;
-  background: var(--bg-color);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(10, 10, 18, 0.75);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
   bottom: 0;
   z-index: 888;
-  border-radius: 0.32rem 0.32rem 0 0;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.42667rem 0.42667rem 0 0;
+  box-shadow: 
+    0 -8px 32px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   @media screen and (min-width: 600px) {
     max-width: 11.41333rem;
@@ -333,7 +335,11 @@ const list = computed(() => [
 }
 
 :deep(.sideBar .van-popup) {
-  // background-color: #202115;
+  background: rgba(10, 10, 18, 0.85) !important;
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
   transition: .15s;
 
   @media screen and (min-width:600px) {

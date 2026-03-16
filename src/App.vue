@@ -358,20 +358,20 @@ router.afterEach((to, from) => {
 :root {
   // --theme-color: #c9fc01;
   --theme-color: #f0cd4f;
-  --bg-color: #000; // 網站背景
-  --bg-header-color: #000; // header 背景
+  --bg-color: #0a0a12; // 網站背景 - 深邃深藍黑
+  --bg-header-color: rgba(10, 10, 18, 0.85); // header 背景 - 毛玻璃
   --bg-body-color: #0d0119; // body 背景
-  --bg-light-color: #2c1b3e; // 淺背景、按鈕 group 背景
-  --bg-lighter-color: #2f253a; // 淺背景、錢包刷新功能背景
-  --bg-lighter-color2: #3a2e45; // 更淺背景
-  --bg-nav-active-color: #2b262e; // nav active 背景
-  --bg-other: #414141; // 次要背景(如輸入框)
-  --bg-back-icon: #1c1e22; // arrow 返回按鈕背景
+  --bg-light-color: rgba(44, 27, 62, 0.6); // 淺背景、按鈕 group 背景 - 半透明
+  --bg-lighter-color: rgba(47, 37, 58, 0.5); // 淺背景、錢包刷新功能背景 - 毛玻璃
+  --bg-lighter-color2: rgba(58, 46, 69, 0.5); // 更淺背景 - 毛玻璃
+  --bg-nav-active-color: rgba(43, 38, 46, 0.7); // nav active 背景
+  --bg-other: rgba(65, 65, 65, 0.5); // 次要背景(如輸入框) - 半透明
+  --bg-back-icon: rgba(28, 30, 34, 0.7); // arrow 返回按鈕背景
   --bg-range-dark: #0e021d;
   --bg-range-light: #26232a;
-  --bg-switch-btn-dark: #19171c;
-  --bg-switch-btn-light: #302d35;
-  --bg-switch-btn-lighter: #453f4e;
+  --bg-switch-btn-dark: rgba(25, 23, 28, 0.8);
+  --bg-switch-btn-light: rgba(48, 45, 53, 0.7);
+  --bg-switch-btn-lighter: rgba(69, 63, 78, 0.6);
   --swiper-pagination-bullet: rgba(0, 0, 0, 0.4); // 首頁 banner 分頁按鈕底色
   --primary-color: linear-gradient(135deg,
       #d4af37 0%,
@@ -397,7 +397,7 @@ router.afterEach((to, from) => {
   --success-color-light: #94eed8;
   --error-color-dark: #da3947;
   --border-color: #c7ffbe;
-  --border-input: #46424d;
+  --border-input: rgba(70, 66, 77, 0.6);
   --border-dashed: 2px dashed #ffffff7b; // 上傳圖片按鈕(銀行帳號頁)
   --qr-background: #fff; // qr-code 背景
   --warning-color: #fbe98b; // 驚嘆號
@@ -410,25 +410,35 @@ router.afterEach((to, from) => {
   --info-color-light: #cae9f3;
   --info-color-dark: #83abbf;
 
+  // 毛玻璃效果變量
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --glass-blur: blur(16px);
+  
+  // 娛樂性漸變
+  --neon-glow: 0 0 20px rgba(240, 205, 79, 0.3), 0 0 40px rgba(240, 205, 79, 0.1);
+  --card-glow: 0 4px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+
 }
 
 // Light Theme
 :root.light-theme {
   --theme-color: #c9a227; // 金色調整為較深色以適應亮色背景
-  --bg-color: #f5f5f7; // 網站背景 - 柔和灰白
-  --bg-header-color: #ffffff; // header 背景 - 純白
-  --bg-body-color: #eeeef0; // body 背景 - 淺灰
-  --bg-light-color: #e8e8ec; // 淺背景、按鈕 group 背景
-  --bg-lighter-color: #ffffff; // 淺背景、錢包刷新功能背景
-  --bg-lighter-color2: #f8f8fa; // 更淺背景
-  --bg-nav-active-color: #e0e0e5; // nav active 背景
-  --bg-other: #e5e5ea; // 次要背景(如輸入框)
-  --bg-back-icon: #d8d8dc; // arrow 返回按鈕背景
+  --bg-color: #f0f2f5; // 網站背景 - 柔和灰白
+  --bg-header-color: rgba(255, 255, 255, 0.8); // header 背景 - 毛玻璃白
+  --bg-body-color: #e8eaed; // body 背景 - 淺灰
+  --bg-light-color: rgba(232, 232, 236, 0.7); // 淺背景、按鈕 group 背景
+  --bg-lighter-color: rgba(255, 255, 255, 0.6); // 淺背景、錢包刷新功能背景 - 毛玻璃
+  --bg-lighter-color2: rgba(248, 248, 250, 0.7); // 更淺背景 - 毛玻璃
+  --bg-nav-active-color: rgba(224, 224, 229, 0.8); // nav active 背景
+  --bg-other: rgba(229, 229, 234, 0.7); // 次要背景(如輸入框)
+  --bg-back-icon: rgba(216, 216, 220, 0.8); // arrow 返回按鈕背景
   --bg-range-dark: #f0f0f3;
   --bg-range-light: #e8e8ec;
-  --bg-switch-btn-dark: #d0d0d5;
-  --bg-switch-btn-light: #e0e0e5;
-  --bg-switch-btn-lighter: #eaeaef;
+  --bg-switch-btn-dark: rgba(208, 208, 213, 0.8);
+  --bg-switch-btn-light: rgba(224, 224, 229, 0.7);
+  --bg-switch-btn-lighter: rgba(234, 234, 239, 0.6);
   --swiper-pagination-bullet: rgba(0, 0, 0, 0.2); // 首頁 banner 分頁按鈕底色
   --primary-color: linear-gradient(135deg,
       #c9a227 0%,
@@ -454,7 +464,7 @@ router.afterEach((to, from) => {
   --success-color-light: #34d399;
   --error-color-dark: #b91c1c;
   --border-color: #d1d5db;
-  --border-input: #c7c7cc;
+  --border-input: rgba(199, 199, 204, 0.6);
   --border-dashed: 2px dashed rgba(0, 0, 0, 0.3); // 上傳圖片按鈕(銀行帳號頁)
   --qr-background: #fff; // qr-code 背景
   --warning-color: #f59e0b; // 驚嘆號
@@ -466,6 +476,13 @@ router.afterEach((to, from) => {
   --info-color: #3b82f6;
   --info-color-light: #93c5fd;
   --info-color-dark: #1d4ed8;
+  
+  // 毛玻璃效果變量 - 亮色主題
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --neon-glow: 0 0 20px rgba(201, 162, 39, 0.2), 0 0 40px rgba(201, 162, 39, 0.08);
+  --card-glow: 0 4px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.03);
 }
 
 * {
@@ -522,6 +539,153 @@ html {
   -moz-osx-font-smoothing: grayscale;
   position: relative;
   background: var(--bg-color);
+  
+  // 娛樂性背景漸變動畫
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(240, 205, 79, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(174, 230, 248, 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(59, 234, 187, 0.03) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+    animation: ambientGlow 15s ease-in-out infinite alternate;
+  }
+}
+
+// 環境光動畫
+@keyframes ambientGlow {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+// 毛玻璃效果 Mixin 類
+.glass-effect {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.32rem;
+  box-shadow: var(--card-glow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--neon-glow), var(--card-glow);
+  }
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.42667rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+// 霓虹發光效果
+.neon-glow {
+  box-shadow: var(--neon-glow);
+  
+  &:hover {
+    box-shadow: 0 0 30px rgba(240, 205, 79, 0.4), 0 0 60px rgba(240, 205, 79, 0.2);
+  }
+}
+
+// 脈衝發光動畫
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(240, 205, 79, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(240, 205, 79, 0.5), 0 0 50px rgba(240, 205, 79, 0.2);
+  }
+}
+
+// 微光閃爍效果
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.15),
+      transparent
+    );
+    animation: shimmer 3s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+// 亮色主題調整
+:root.light-theme {
+  #app::before {
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(201, 162, 39, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(37, 99, 235, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(5, 150, 105, 0.02) 0%, transparent 60%);
+  }
+  
+  .glass-effect,
+  .glass-card,
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+  
+  .shimmer::after {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+  }
 }
 
 img {

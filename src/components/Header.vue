@@ -386,14 +386,20 @@ onUnmounted(() => {
 .header {
   :deep(.van-sticky) {
     background: var(--bg-header-color);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
   }
 
 &-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--bg-header-color);
+    background-color: transparent;
     padding: .26667rem;
+    position: relative;
+    z-index: 1;
     
     .theme-toggle {
       display: flex;
@@ -420,6 +426,7 @@ onUnmounted(() => {
       &:hover {
         background: rgba(255, 255, 255, 0.18);
         transform: scale(1.08);
+        box-shadow: 0 0 15px rgba(240, 205, 79, 0.3);
         
         svg {
           transform: rotate(15deg);
@@ -445,9 +452,22 @@ onUnmounted(() => {
   .btn-refresh {
     vertical-align: middle;
     border-radius: 50%;
-    background-color: var(--bg-lighter-color);
-    padding: .05rem .1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    padding: .08rem .12rem;
     margin-right: .15rem;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 12px rgba(240, 205, 79, 0.2);
+    }
+    
+    &:active {
+      transform: scale(0.95);
+    }
   }
 
   .balance {
@@ -460,13 +480,23 @@ onUnmounted(() => {
     height: .934rem;
     padding-left: .18667rem;
     padding-right: .08rem;
-    border-radius: .13333rem;
-    background-color: var(--bg-lighter-color);
+    border-radius: 0.21333rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--card-glow);
     justify-content: space-between;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: var(--neon-glow);
+    }
 
     img {
       width: .6rem;
       height: .6rem;
+      filter: drop-shadow(0 0 4px rgba(240, 205, 79, 0.4));
     }
 
     span {
@@ -474,6 +504,7 @@ onUnmounted(() => {
       // font-family: Geogrotesque-Md;
       font-weight: 650;
       padding: 0 .37333rem 0 .16rem;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
     }
   }
 
