@@ -93,11 +93,16 @@ const cells = [
     margin: .2667rem;
     padding: .2667rem;
     background: var(--bg-light-color);
-    border-radius: .16rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--card-glow);
+    border-radius: .21333rem;
+    transition: all 0.3s ease;
 
     .van-cell {
       padding: .16rem;
-      background: var(--bg-light-color) !important;
+      background: transparent !important;
       color: var(--font-dark-color) !important;
 
       :deep(.van-cell__title) {

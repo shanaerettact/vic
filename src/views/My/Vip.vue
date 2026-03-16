@@ -255,9 +255,13 @@ common.vips.forEach((ele, index) => {
 
   .progressBar {
     width: 100%;
-    border-radius: .13333rem;
+    border-radius: .21333rem;
     margin-top: .10667rem;
     background: var(--bg-light-color);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--card-glow);
     padding: 0 .21333rem .26667rem;
 
     .levelProgressWrapper {

@@ -110,11 +110,17 @@ watch(showOptions, () => {   // 本組件改變 show 狀態, 父組件也更新
 
 <style lang="scss" scoped>
 .van-popup {
-  background-color: var(--bg-color) !important;
+  background: rgba(10, 10, 18, 0.85) !important;
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: none;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-bottom: .8rem;
+  border-radius: 0.42667rem 0.42667rem 0 0 !important;
 }
 
 @media screen and (min-width: 600px) {
@@ -129,7 +135,7 @@ watch(showOptions, () => {   // 本組件改變 show 狀態, 父組件也更新
 .van-popup .pop-header {
   position: sticky;
   top: 0;
-  background-color: var(--bg-color);
+  background: transparent;
   z-index: 1;
   width: 100%;
 
@@ -157,13 +163,23 @@ watch(showOptions, () => {   // 本組件改變 show 狀態, 父組件也更新
 
   .pop-item {
     height: 1.01333rem;
-    border-radius: .16rem;
+    border-radius: 0.21333rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 0 .32rem;
     padding: 0 .26667rem 0 .34667rem;
     box-sizing: border-box;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateX(4px);
+    }
 
     .pop-left {
       display: flex;
@@ -198,7 +214,9 @@ watch(showOptions, () => {   // 本組件改變 show 狀態, 父組件也更新
   }
 
   .popactive {
-    background: var(--bg-nav-active-color) !important;
+    background: rgba(240, 205, 79, 0.15) !important;
+    border-color: rgba(240, 205, 79, 0.3) !important;
+    box-shadow: 0 0 15px rgba(240, 205, 79, 0.1);
   }
 }
 
@@ -210,14 +228,22 @@ watch(showOptions, () => {   // 本組件改變 show 狀態, 父組件也更新
   width: 100%;
   position: relative;
   min-height: 1.49333rem;
-  border-radius: .10667rem;
+  border-radius: 0.21333rem;
   padding: .26667rem .13333rem;
   margin-bottom: .21333rem;
   box-sizing: border-box;
   gap: .10667rem;
-  border-radius: .16rem;
-  background: var(--bg-lighter-color2);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-glow);
   justify-content: space-between;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: var(--neon-glow);
+  }
 
   .left {
     display: flex;

@@ -120,6 +120,9 @@ homeInit();
 main {
   padding: 0.32rem 0.26667rem 0.53333rem;
   background-color: var(--bg-color);
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
 }
 
 :deep(.swiper) {
@@ -196,7 +199,30 @@ main {
 }
 
 .img-banner {
-  border-radius: .2133rem;
+  border-radius: 0.32rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s ease;
+  
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(240, 205, 79, 0.1);
+  }
+}
+
+// Banner 容器毛玻璃效果
+.banner {
+  position: relative;
+  border-radius: 0.32rem;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 0.32rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+  }
 }
 
 </style>

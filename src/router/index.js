@@ -141,7 +141,7 @@ const router = createRouter({
     {
       path: "/SafeCenter/walletaddrmanager",
       name: "walletaddrmanager",
-      component: () => import("../views/My/SafeCenter/WalletAddrManager.vue"),
+      component: () => import("../views/My/safeCenter/WalletAddrManager.vue"),
       meta: {
         depth: 1,
         hideFooter: true,

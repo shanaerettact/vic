@@ -286,9 +286,14 @@ onMounted(() => {
   padding-bottom: 0;
   border-radius: .16rem;
   background-color: var(--bg-light-color);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-glow);
+  transition: all 0.3s ease;
 
   :deep(.van-tabs__nav--line) {
-    background-color: var(--bg-light-color);
+    background-color: transparent;
     // height: .96rem;
     overflow: hidden;
     padding: 0;
@@ -357,6 +362,10 @@ onMounted(() => {
       padding: .16rem;
       border-radius: .2667rem;
       background-color: var(--bg-light-color);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--card-glow);
     }
 
     .first-line {

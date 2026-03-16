@@ -185,6 +185,7 @@ onUnmounted(() => {
       align-items: flex-start;
       flex-direction: row;
       flex-wrap: nowrap;
+      gap: 0.16rem;
     }
   }
 
@@ -194,13 +195,51 @@ onUnmounted(() => {
     min-width: 2.93333rem;
     flex-shrink: 0;
     min-height: 4.16rem;
-    overflow: hidden;
+    overflow: visible;
+    border-radius: 0.26667rem;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    
+    // 毛玻璃卡片效果
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 0.32rem;
+      background: linear-gradient(135deg, rgba(240, 205, 79, 0.2) 0%, transparent 50%, rgba(174, 230, 248, 0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+    
+    &:hover {
+      transform: translateY(-6px) scale(1.02);
+      
+      &::before {
+        opacity: 1;
+      }
+      
+      .games-item-item {
+        box-shadow: 
+          0 12px 40px rgba(0, 0, 0, 0.4),
+          0 0 30px rgba(240, 205, 79, 0.15);
+      }
+    }
+    
+    &:active {
+      transform: translateY(-2px) scale(1.01);
+    }
 
     &-item {
       display: block;
-      background: transparent;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
       overflow: hidden;
       position: relative;
+      border-radius: 0.26667rem;
+      box-shadow: var(--card-glow);
+      transition: all 0.35s ease;
 
       // z-index: 0;
       &::after {
@@ -210,18 +249,37 @@ onUnmounted(() => {
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(transparent 60%, #000);
-        border-radius: .2133rem;
+        background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.7));
+        border-radius: 0.26667rem;
         z-index: 0;
+      }
+      
+      // 微光閃爍效果
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.12),
+          transparent
+        );
+        z-index: 2;
+        animation: cardShimmer 4s infinite;
+        animation-delay: calc(var(--card-index, 0) * 0.3s);
       }
     }
 
     &:not(:last-child) {
-      margin-right: 0.13333rem;
+      margin-right: 0;
     }
 
     .van-image {
-      border-radius: 0.21333rem;
+      border-radius: 0.26667rem;
       overflow: hidden;
     }
   }
@@ -258,6 +316,14 @@ onUnmounted(() => {
       font-weight: 700;
     }
   }
+}
 
+@keyframes cardShimmer {
+  0% {
+    left: -100%;
+  }
+  20%, 100% {
+    left: 100%;
+  }
 }
 </style>

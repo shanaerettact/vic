@@ -4,7 +4,7 @@ import HeaderCross from "@/components/Utilities/HeaderCross.vue";
 import Withdraw_Tron from '../components/Pages/Withdraw_Tron.vue';
 import Deposit_Tabbar from "@/components/Blocks/Deposit_Tabbar.vue";
 import IconArrowR from '@/components/Icons/icon-arrow-r.vue'
-import IconTemplate from '@/components/Icons/iconTemplate.vue'
+import IconTemplate from '@/components/Icons/IconTemplate.vue'
 import { useI18n } from "vue-i18n";
 import { treasureChest } from '@/components/Images/base64'
 
@@ -511,7 +511,12 @@ const submit = async () => {
 .choosing-area .van-cell-group {
   padding: .26667rem;
   background: var(--bg-light-color);
-  border-radius: .16rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-glow);
+  border-radius: .21333rem;
+  transition: all 0.3s ease;
 
   .content-head {
     color: var(--font-color);
@@ -533,7 +538,7 @@ const submit = async () => {
   }
 
   .van-cell {
-    background: var(--bg-light-color);
+    background: transparent;
 
     &__title span {
       font-size: .37333rem;
@@ -549,13 +554,16 @@ const submit = async () => {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  // height: calc(100% - 1.5333rem);
-  // background: var(--bg-light-color);
-  background: #ffffff1d;
+  background: var(--bg-light-color);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-glow);
   padding: .64rem .3733rem;
-  border-radius: .16rem;
+  border-radius: .21333rem;
   margin-bottom: 3.2rem;
   box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
 .withdraw-form {
