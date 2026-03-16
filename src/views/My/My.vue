@@ -337,9 +337,13 @@ onMounted(() => {
 
     .progressBar {
       width: 100%;
-      border-radius: .13333rem;
+      border-radius: .21333rem;
       margin-top: .10667rem;
       background: var(--bg-light-color);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--card-glow);
       padding: 0 .21333rem .26667rem;
 
       .levelProgressWrapper {
@@ -385,11 +389,20 @@ onMounted(() => {
   .van-cell-group {
     padding: .26667rem;
     background: var(--bg-light-color);
-    border-radius: .16rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--card-glow);
+    border-radius: .21333rem;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: var(--neon-glow);
+    }
 
     .van-cell {
       padding: .16rem;
-      background: var(--bg-light-color);
+      background: transparent;
 
       :deep(.van-cell__title) {
         display: flex;
@@ -435,9 +448,17 @@ onMounted(() => {
   .logout-item {
     margin-bottom: .32rem;
     padding: .26667rem;
-    border-radius: .16rem;
-    background: #2b2d34;
+    border-radius: .21333rem;
     background: var(--bg-light-color);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--card-glow);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: var(--neon-glow);
+    }
 
     .van-cell {
       display: flex;
@@ -446,7 +467,7 @@ onMounted(() => {
       flex-direction: row;
       flex-wrap: nowrap;
       padding: .16rem;
-      background: var(--bg-light-color);
+      background: transparent;
 
       :deep(.van-cell__title) {
         display: flex;
@@ -489,10 +510,13 @@ onMounted(() => {
   bottom: .1rem;
   width: 100%;
   z-index: 1;
-  background-color: rgba(32, 33, 37);
-  background-color: var(--bg-light-color);
+  background: var(--bg-light-color);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
   font-size: .4rem;
-  border-radius: .3rem;
+  border-radius: .42667rem;
   font-weight: 550;
 
   @media (min-width: 600px) {

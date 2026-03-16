@@ -511,7 +511,12 @@ const submit = async () => {
 .choosing-area .van-cell-group {
   padding: .26667rem;
   background: var(--bg-light-color);
-  border-radius: .16rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-glow);
+  border-radius: .21333rem;
+  transition: all 0.3s ease;
 
   .content-head {
     color: var(--font-color);
@@ -533,7 +538,7 @@ const submit = async () => {
   }
 
   .van-cell {
-    background: var(--bg-light-color);
+    background: transparent;
 
     &__title span {
       font-size: .37333rem;

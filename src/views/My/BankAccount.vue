@@ -551,7 +551,12 @@ const checkBankAccount = async () => {
     margin: .373rem .32rem .32rem .32rem;
     padding: 0 .293rem .3467rem;
     background: var(--bg-light-color);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--card-glow);
     border-radius: .21333rem;
+    transition: all 0.3s ease;
 
     .no-data {
       display: flex;
@@ -692,7 +697,12 @@ const checkBankAccount = async () => {
     margin: .373rem .32rem .32rem .32rem;
     padding: .5rem .35rem .3467rem;
     background: var(--bg-light-color);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--card-glow);
     border-radius: .21333rem;
+    transition: all 0.3s ease;
 
     .note {
       :deep(.wrapper .article) {

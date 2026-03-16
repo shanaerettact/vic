@@ -424,7 +424,12 @@ const submit = async () => {
 .choosing-area .van-cell-group {
   padding: .26667rem;
   background: var(--bg-light-color);
-  border-radius: .16rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-glow);
+  border-radius: .21333rem;
+  transition: all 0.3s ease;
 
   .content-head {
     color: var(--font-color);
@@ -446,7 +451,7 @@ const submit = async () => {
   }
 
   .van-cell {
-    background: var(--bg-light-color);
+    background: transparent;
 
     &__title span {
       font-size: .37333rem;
@@ -471,8 +476,12 @@ const submit = async () => {
   width: 100%;
   height: calc(100% - .53333rem);
   background: var(--bg-light-color);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-glow);
   padding: .64rem .37333rem;
-  border-radius: .16rem;
+  border-radius: .21333rem;
   margin-bottom: 3.2rem;
   box-sizing: border-box;
 
