@@ -540,7 +540,7 @@ html {
   position: relative;
   background: var(--bg-color);
   
-  // 娛樂性背景漸變動畫
+  // 娛樂性背景漸變���畫
   &::before {
     content: '';
     position: fixed;
@@ -720,6 +720,22 @@ html {
 
 img {
   max-width: 100%;
+}
+
+// 全局毛玻璃效果規則：為所有使用 --bg-light-color 的元素自動添加毛玻璃效果
+[style*="background: var(--bg-light-color)"],
+[style*="background-color: var(--bg-light-color)"],
+[style*="var(--bg-light-color)"] {
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--card-glow) !important;
+  transition: all 0.3s ease !important;
+}
+
+// 毛玻璃元素懸停效果
+[style*="--bg-light-color"]:hover {
+  box-shadow: var(--neon-glow) !important;
 }
 
 .loading {
