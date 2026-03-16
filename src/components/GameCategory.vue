@@ -274,35 +274,92 @@ onUnmounted(() => {
     min-width: 2.93333rem;
     flex-shrink: 0;
     min-height: 4.16rem;
-    overflow: hidden;
+    overflow: visible;
+    border-radius: 0.26667rem;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    
+    // 毛玻璃卡片邊框光暈效果
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 0.32rem;
+      background: linear-gradient(135deg, rgba(240, 205, 79, 0.2) 0%, transparent 50%, rgba(174, 230, 248, 0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+    
+    // 懸停動畫
+    &:hover {
+      transform: translateY(-6px) scale(1.02);
+      
+      &::before {
+        opacity: 1;
+      }
+      
+      .games-item-item {
+        box-shadow: 
+          0 12px 40px rgba(0, 0, 0, 0.4),
+          0 0 30px rgba(240, 205, 79, 0.15);
+      }
+    }
+    
+    &:active {
+      transform: translateY(-2px) scale(1.01);
+    }
 
     &-item {
       display: block;
-      background: transparent;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
       overflow: hidden;
       position: relative;
-      // z-index: 0;
+      border-radius: 0.26667rem;
+      box-shadow: var(--card-glow);
+      transition: all 0.35s ease;
+
+      // 漸變遮罩
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.7));
+        border-radius: 0.26667rem;
+        z-index: 0;
+      }
+      
+      // 微光閃爍效果
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.12),
+          transparent
+        );
+        z-index: 2;
+        animation: cardShimmer 4s infinite;
+      }
     }
 
     &:not(:last-child) {
-      margin-right: 0.13333rem;
+      margin-right: 0.16rem;
     }
 
     .van-image {
-      border-radius: 0.2133rem;
+      border-radius: 0.26667rem;
       overflow: hidden;
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(transparent 60%, #000);
-      border-radius: .2133rem;
-      z-index: 0;
     }
   }
 
@@ -321,17 +378,29 @@ onUnmounted(() => {
   }
 }
 
-// 骨架屏樣式
+// 卡片微光動畫
+@keyframes cardShimmer {
+  0% {
+    left: -100%;
+  }
+  20%, 100% {
+    left: 100%;
+  }
+}
+
+// 骨架屏樣式 - 毛玻璃質感
 .game-skeleton {
   width: 2.93333rem;
   height: 4.16rem;
   border-radius: 0.21333rem;
-  background: linear-gradient(
-    135deg,
-    rgba(44, 27, 62, 0.9) 0%,
-    rgba(58, 38, 80, 0.9) 50%,
-    rgba(44, 27, 62, 0.9) 100%
-  );
+  background: rgba(44, 27, 62, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -340,25 +409,44 @@ onUnmounted(() => {
   justify-content: center;
   gap: 0.32rem;
 
+  // 毛玻璃內層光暈
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at 30% 20%,
+      rgba(240, 205, 79, 0.08) 0%,
+      transparent 50%
+    );
+    pointer-events: none;
+  }
+
   &__shine {
     position: absolute;
     inset: 0;
     background: linear-gradient(
       105deg,
-      transparent 30%,
-      rgba(240, 205, 79, 0.12) 50%,
-      rgba(255, 255, 255, 0.06) 55%,
-      transparent 70%
+      transparent 20%,
+      rgba(255, 255, 255, 0.08) 40%,
+      rgba(240, 205, 79, 0.15) 50%,
+      rgba(255, 255, 255, 0.08) 60%,
+      transparent 80%
     );
-    animation: skeletonScan 1.8s ease-in-out infinite;
+    animation: skeletonScan 2s ease-in-out infinite;
   }
 
   &__icon {
     width: 1.06667rem;
     height: 1.06667rem;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(240, 205, 79, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(240, 205, 79, 0.25);
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -367,7 +455,8 @@ onUnmounted(() => {
     svg {
       width: 0.56rem;
       height: 0.56rem;
-      color: rgba(240, 205, 79, 0.35);
+      color: rgba(240, 205, 79, 0.45);
+      filter: drop-shadow(0 0 4px rgba(240, 205, 79, 0.3));
     }
   }
 
@@ -382,7 +471,10 @@ onUnmounted(() => {
   &__bar {
     height: 0.21333rem;
     border-radius: 0.10667rem;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
     animation: skeletonPulse 1.8s ease-in-out infinite;
     margin: 0 auto;
 
