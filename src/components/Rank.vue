@@ -1071,8 +1071,12 @@ const state = reactive({
       height: 1.22667rem;
       font-size: 0.34667rem;
       background: var(--bg-light-color);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--card-glow);
       margin: 0.06667rem 0;
-      border-radius: 0.08rem;
+      border-radius: 0.16rem;
       box-sizing: border-box;
       display: flex;
       justify-content: flex-start;

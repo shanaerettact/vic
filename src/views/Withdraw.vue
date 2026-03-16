@@ -554,13 +554,16 @@ const submit = async () => {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  // height: calc(100% - 1.5333rem);
-  // background: var(--bg-light-color);
-  background: #ffffff1d;
+  background: var(--bg-light-color);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-glow);
   padding: .64rem .3733rem;
-  border-radius: .16rem;
+  border-radius: .21333rem;
   margin-bottom: 3.2rem;
   box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
 .withdraw-form {
