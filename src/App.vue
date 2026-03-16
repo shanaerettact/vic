@@ -23,6 +23,21 @@ const showFooter = computed(() => {
 const { t, locale } = useI18n();
 
 
+// Theme management
+const isDarkTheme = ref(localStorage.getItem('vic-theme') !== 'light');
+
+const applyTheme = (isDark) => {
+  if (isDark) {
+    document.documentElement.classList.remove('light-theme');
+  } else {
+    document.documentElement.classList.add('light-theme');
+  }
+  localStorage.setItem('vic-theme', isDark ? 'dark' : 'light');
+};
+
+// Apply theme on load
+applyTheme(isDarkTheme.value);
+
 const common = reactive({
   user: {},
   banner: [],
@@ -49,6 +64,11 @@ const common = reactive({
   languageReady: false,
   invite: "",
   primeCoinName: "VicCoin",
+  isDarkTheme: isDarkTheme,
+  toggleTheme: () => {
+    isDarkTheme.value = !isDarkTheme.value;
+    applyTheme(isDarkTheme.value);
+  },
   baseAjax: baseAjax,
   baseAjaxImage: baseAjaxImage,
   $t: t,
@@ -392,6 +412,62 @@ router.afterEach((to, from) => {
 
 }
 
+// Light Theme
+:root.light-theme {
+  --theme-color: #c9a227; // 金色調整為較深色以適應亮色背景
+  --bg-color: #f5f5f7; // 網站背景 - 柔和灰白
+  --bg-header-color: #ffffff; // header 背景 - 純白
+  --bg-body-color: #eeeef0; // body 背景 - 淺灰
+  --bg-light-color: #e8e8ec; // 淺背景、按鈕 group 背景
+  --bg-lighter-color: #ffffff; // 淺背景、錢包刷新功能背景
+  --bg-lighter-color2: #f8f8fa; // 更淺背景
+  --bg-nav-active-color: #e0e0e5; // nav active 背景
+  --bg-other: #e5e5ea; // 次要背景(如輸入框)
+  --bg-back-icon: #d8d8dc; // arrow 返回按鈕背景
+  --bg-range-dark: #f0f0f3;
+  --bg-range-light: #e8e8ec;
+  --bg-switch-btn-dark: #d0d0d5;
+  --bg-switch-btn-light: #e0e0e5;
+  --bg-switch-btn-lighter: #eaeaef;
+  --swiper-pagination-bullet: rgba(0, 0, 0, 0.2); // 首頁 banner 分頁按鈕底色
+  --primary-color: linear-gradient(135deg,
+      #c9a227 0%,
+      #e8d47a 45%,
+      #d4af37 50%,
+      #e8d47a 55%,
+      #c9a227 100%); // active 按鈕背景
+  --primary-btn-font-color: #1a1a1a; // active 按鈕字體顏色
+  --font-color: #1a1a1a; // 主字體顏色 - 深灰黑
+  --font-dark-color: #4a4a4a; // 次級字體
+  --font-darker-color: #6a6a6a; // 更淺字體
+  --font-dark-theme-color: #1a1a1a;
+  --font-primary-color: #2563eb; // 次要字體顏色 - 藍色
+  --mod-pwd-placeholder: #999999;
+  --gold-text: #b8860b; // 金色文字調整
+  --info-bg: rgba(255, 255, 255, 0.85); // info 提示背景
+  --error-color: #dc2626;
+  --warning-color-dark: #b8860b;
+  --gold-color-dark: #996515; // badge、hash(flag) 標籤背景
+  --other-color: #9ca3af; // 分隔線、次要按鈕背景
+  --other-color-light: rgba(179, 135, 40, 0.4); // 分隔線 or 次要按鈕 hover
+  --success-color: #059669;
+  --success-color-light: #34d399;
+  --error-color-dark: #b91c1c;
+  --border-color: #d1d5db;
+  --border-input: #c7c7cc;
+  --border-dashed: 2px dashed rgba(0, 0, 0, 0.3); // 上傳圖片按鈕(銀行帳號頁)
+  --qr-background: #fff; // qr-code 背景
+  --warning-color: #f59e0b; // 驚嘆號
+
+  // box-shadow、divider、linear-gradient、彈窗 blur不設定
+  --success-color-dark: #047857;
+  --warning-color-light: #fde68a;
+  --error-color-light: #fca5a5;
+  --info-color: #3b82f6;
+  --info-color-light: #93c5fd;
+  --info-color-dark: #1d4ed8;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -516,6 +592,139 @@ img {
   // background: var(--primary-color);
   // box-shadow: 0 0.10667rem 0 0 #89a617, inset 0 0 0.16rem 0.10667rem #bbfc01,
   //   0 0 0.10667rem 0.13333rem rgba(252, 197, 1, 0.07);
+}
+
+// Glassmorphism Button Styles
+.glass-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.26667rem 0.53333rem;
+  font-size: 0.37333rem;
+  font-weight: 600;
+  border-radius: 0.21333rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  
+  &.glass-primary {
+    background: rgba(240, 205, 79, 0.25);
+    color: var(--theme-color);
+    border-color: rgba(240, 205, 79, 0.35);
+    box-shadow: 0 4px 16px rgba(240, 205, 79, 0.15);
+    
+    &:hover {
+      background: rgba(240, 205, 79, 0.35);
+      box-shadow: 0 6px 20px rgba(240, 205, 79, 0.25);
+      transform: translateY(-2px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(240, 205, 79, 0.2);
+    }
+  }
+  
+  &.glass-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--font-color);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  &.glass-dark {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--font-color);
+    border-color: rgba(255, 255, 255, 0.1);
+    
+    &:hover {
+      background: rgba(0, 0, 0, 0.4);
+    }
+  }
+}
+
+// Light theme glassmorphism adjustments
+:root.light-theme {
+  .glass-button {
+    &.glass-primary {
+      background: rgba(201, 162, 39, 0.2);
+      color: #8b6914;
+      border-color: rgba(201, 162, 39, 0.35);
+      box-shadow: 0 4px 16px rgba(201, 162, 39, 0.12);
+      
+      &:hover {
+        background: rgba(201, 162, 39, 0.3);
+      }
+    }
+    
+    &.glass-secondary {
+      background: rgba(0, 0, 0, 0.05);
+      color: var(--font-color);
+      border-color: rgba(0, 0, 0, 0.1);
+      
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}
+
+// Theme Toggle Button
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  svg {
+    width: 0.48rem;
+    height: 0.48rem;
+    fill: var(--theme-color);
+    transition: transform 0.4s ease;
+  }
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: scale(1.08);
+    
+    svg {
+      transform: rotate(15deg);
+    }
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+:root.light-theme .theme-toggle {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.1);
+  
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
 }
 
 .van-tabs__line {

@@ -112,6 +112,17 @@ onUnmounted(() => {
           alt=""
         />
       </div>
+      <!-- Theme Toggle Button -->
+      <div class="theme-toggle" @click="common.toggleTheme" :title="common.isDarkTheme ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+        <!-- Sun Icon (for dark mode - click to switch to light) -->
+        <svg v-if="common.isDarkTheme" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
+        </svg>
+        <!-- Moon Icon (for light mode - click to switch to dark) -->
+        <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clip-rule="evenodd" />
+        </svg>
+      </div>
       <div
         v-if="!common.user.account"
         class="header-actions"
@@ -377,16 +388,48 @@ onUnmounted(() => {
     background: var(--bg-header-color);
   }
 
-  &-top {
-    position: relative;
-    height: 1.5333rem;
-    padding: 0 0.32rem;
-    z-index: 100;
+&-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    background-color: var(--bg-header-color);
+    padding: .26667rem;
+    
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 0.85rem;
+      height: 0.85rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-left: 0.26667rem;
+      
+      svg {
+        width: 0.45rem;
+        height: 0.45rem;
+        fill: var(--theme-color);
+        transition: transform 0.4s ease;
+      }
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.18);
+        transform: scale(1.08);
+        
+        svg {
+          transform: rotate(15deg);
+        }
+      }
+      
+      &:active {
+        transform: scale(0.95);
+      }
+    }
   }
 
   &-logo {

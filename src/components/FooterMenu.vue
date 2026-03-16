@@ -126,10 +126,13 @@ const list = computed(() => [
   display: flex;
   width: 100%;
   background: var(--bg-color);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   bottom: 0;
   z-index: 888;
-  // padding-bottom: env(safe-area-inset-bottom);   // iphone16 往下滑有懸浮問題, 取消此項後觀察
-  border-radius: 0.21333rem 0.21333rem 0 0;
+  border-radius: 0.32rem 0.32rem 0 0;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 
   @media screen and (min-width: 600px) {
     max-width: 11.41333rem;
@@ -150,6 +153,28 @@ const list = computed(() => [
     justify-content: center;
     align-items: center;
     flex-wrap: nowrap;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    // Hover effect for all items
+    &:hover {
+      :deep(.van-badge__wrapper img:not(.home-icon)) {
+        transform: scale(1.15);
+      }
+    }
+
+    // Active ripple effect background
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(240, 205, 79, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease;
+    }
 
     :deep(.van-badge__wrapper) {
       display: flex;
@@ -164,6 +189,8 @@ const list = computed(() => [
     :deep(.van-badge__wrapper img) {
       width: 0.48rem;
       height: 0.42667rem;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      filter: grayscale(30%) opacity(0.7);
     }
 
     :deep(.van-badge__wrapper img.home-icon) {
@@ -171,6 +198,10 @@ const list = computed(() => [
       height: 1.3rem;
       position: relative;
       bottom: .62rem;
+      filter: none;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      // Glow effect for home icon
+      filter: drop-shadow(0 4px 8px rgba(240, 205, 79, 0.3));
     }
 
     :deep(.van-tabbar-item__text) {
@@ -179,14 +210,126 @@ const list = computed(() => [
       word-break: break-word;
       text-align: center;
       font-weight: 650;
+      transition: all 0.3s ease;
+      opacity: 0.7;
     }
   }
 }
 
+// Active state with animations
 :deep(.van-tabbar-item--active) {
-  // background-color: var(--bg-nav-active-color);
-  background-color: #00000000;
+  background-color: transparent;
   color: var(--theme-color);
+  
+  // Active ripple glow
+  &::before {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  
+  .van-badge__wrapper img:not(.home-icon) {
+    transform: scale(1.2) translateY(-2px);
+    filter: grayscale(0%) opacity(1) drop-shadow(0 2px 8px rgba(240, 205, 79, 0.4));
+    animation: iconBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  .van-badge__wrapper img.home-icon {
+    transform: scale(1.1) translateY(-4px);
+    filter: drop-shadow(0 6px 16px rgba(240, 205, 79, 0.5));
+    animation: homePulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  .van-tabbar-item__text {
+    color: var(--theme-color);
+    opacity: 1;
+    transform: translateY(-1px);
+    text-shadow: 0 0 8px rgba(240, 205, 79, 0.3);
+  }
+}
+
+// Icon bounce animation
+@keyframes iconBounce {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  40% {
+    transform: scale(1.3) translateY(-6px);
+  }
+  60% {
+    transform: scale(1.15) translateY(-1px);
+  }
+  100% {
+    transform: scale(1.2) translateY(-2px);
+  }
+}
+
+// Home icon pulse animation
+@keyframes homePulse {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  30% {
+    transform: scale(1.2) translateY(-8px);
+  }
+  50% {
+    transform: scale(1.05) translateY(-2px);
+  }
+  100% {
+    transform: scale(1.1) translateY(-4px);
+  }
+}
+
+// Glow pulse for home icon (continuous)
+@keyframes glowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 6px 16px rgba(240, 205, 79, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 8px 24px rgba(240, 205, 79, 0.7));
+  }
+}
+
+// Light theme adjustments
+:root.light-theme {
+  .tabbar {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  
+  .tabbar-item {
+    &::before {
+      background: radial-gradient(circle, rgba(201, 162, 39, 0.12) 0%, transparent 70%);
+    }
+    
+    :deep(.van-badge__wrapper img) {
+      filter: grayscale(30%) opacity(0.6);
+    }
+    
+    :deep(.van-badge__wrapper img.home-icon) {
+      filter: drop-shadow(0 4px 8px rgba(201, 162, 39, 0.25));
+    }
+    
+    :deep(.van-tabbar-item__text) {
+      color: var(--font-color);
+      opacity: 0.6;
+    }
+  }
+  
+  :deep(.van-tabbar-item--active) {
+    .van-badge__wrapper img:not(.home-icon) {
+      filter: grayscale(0%) opacity(1) drop-shadow(0 2px 8px rgba(201, 162, 39, 0.35));
+    }
+    
+    .van-badge__wrapper img.home-icon {
+      filter: drop-shadow(0 6px 16px rgba(201, 162, 39, 0.4));
+    }
+    
+    .van-tabbar-item__text {
+      color: #8b6914;
+      text-shadow: 0 0 8px rgba(201, 162, 39, 0.2);
+    }
+  }
 }
 
 :deep(.sideBar .van-popup) {
