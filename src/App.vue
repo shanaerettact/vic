@@ -663,6 +663,28 @@ html {
 }
 
 // 亮色主題調整
+// 為所有使用 --bg-light-color 的元素添加毛玻璃基礎效果
+.glass-light-bg {
+  background: var(--bg-light-color);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-glow);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(44, 27, 62, 0.7);
+    box-shadow: var(--neon-glow);
+  }
+}
+
+// 全局為 bg-light-color 背景添加毛玻璃支援
+[style*="bg-light-color"],
+.bg-light-glass {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
 :root.light-theme {
   #app::before {
     background: 
@@ -676,6 +698,14 @@ html {
   .glass-panel {
     background: rgba(255, 255, 255, 0.6);
     border-color: rgba(0, 0, 0, 0.06);
+  }
+  
+  .glass-light-bg {
+    background: var(--bg-light-color);
+    
+    &:hover {
+      background: rgba(232, 232, 236, 0.85);
+    }
   }
   
   .shimmer::after {
