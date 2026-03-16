@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, inject, watch, ref } from "vue";
+import { reactive, inject, watch, ref, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
@@ -64,6 +64,47 @@ const randomNumber = () => {
   return Math.floor(Math.random() * 900) + 1000
 }
 
+const isDragging = ref(false)
+let dragState = { startX: 0, scrollLeft: 0, moved: false, el: null }
+
+const onMouseDown = (e) => {
+  const el = e.currentTarget
+  isDragging.value = true
+  dragState = { startX: e.pageX, scrollLeft: el.scrollLeft, moved: false, el }
+  el.style.cursor = 'grabbing'
+}
+
+const onMouseMove = (e) => {
+  if (!isDragging.value) return
+  e.preventDefault()
+  const dx = e.pageX - dragState.startX
+  if (Math.abs(dx) > 3) dragState.moved = true
+  dragState.el.scrollLeft = dragState.scrollLeft - dx
+}
+
+const onMouseUp = () => {
+  if (!isDragging.value) return
+  isDragging.value = false
+  if (dragState.el) dragState.el.style.cursor = 'grab'
+}
+
+const onClickCapture = (e) => {
+  if (dragState.moved) {
+    e.stopPropagation()
+    e.preventDefault()
+    dragState.moved = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('mousemove', onMouseMove)
+  document.addEventListener('mouseup', onMouseUp)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('mousemove', onMouseMove)
+  document.removeEventListener('mouseup', onMouseUp)
+})
 
 </script>
 
@@ -92,7 +133,11 @@ const randomNumber = () => {
           </div>
         </div>
 
-        <div class="games-items-bottom">
+        <div
+          class="games-items-bottom"
+          @mousedown="onMouseDown"
+          @click.capture="onClickCapture"
+        >
           <div class="games-items-group">
             <div
               v-for="(gameItem, gameIndex) in item.game"
@@ -187,12 +232,17 @@ const randomNumber = () => {
       position: relative;
       width: 100%;
       display: flex;
-      overflow-x: visible;
+      overflow-x: auto;
       overflow-y: hidden;
+      cursor: grab;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { display: none; }
     }
 
     &-group {
-      width: auto;
+      width: max-content;
+      min-width: 100%;
       height: 100%;
       display: flex;
       justify-content: flex-start;
@@ -205,6 +255,8 @@ const randomNumber = () => {
   &-item {
     position: relative;
     width: 2.93333rem;
+    min-width: 2.93333rem;
+    flex-shrink: 0;
     min-height: 4.16rem;
     overflow: hidden;
 

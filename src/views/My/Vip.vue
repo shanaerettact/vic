@@ -6,9 +6,15 @@ import IconArrowMore from '@/components/Icons/icon-arrow-more.vue'
 import { Swiper, SwiperSlide } from "swiper/vue"
 import "swiper/css";
 import "swiper/css/bundle";
-import { BannerLevel_1, BannerLevel_2 } from "@/components/Images/base64.js";
-import { BannerLevel_3, BannerLevel_4 } from "@/components/Images/base64.js";
-import { BannerLevel_5, BannerLevel_6 } from "@/components/Images/base64.js";
+// import { BannerLevel_1, BannerLevel_2 } from "@/components/Images/base64.js";
+// import { BannerLevel_3, BannerLevel_4 } from "@/components/Images/base64.js";
+// import { BannerLevel_5, BannerLevel_6 } from "@/components/Images/base64.js";
+import BannerLevel_1 from "@/assets/img/LV-01.png";
+import BannerLevel_2 from "@/assets/img/LV-02.png";
+import BannerLevel_3 from "@/assets/img/LV-03.png";
+import BannerLevel_4 from "@/assets/img/LV-04.png";
+import BannerLevel_5 from "@/assets/img/LV-05.png";
+import BannerLevel_6 from "@/assets/img/LV-06.png";
 import LevelSystemItem from "@/components/Blocks/LevelSystemItem.vue";
 import Footer from "@/components/Footer.vue";
 
@@ -51,36 +57,18 @@ const progressPercentage = computed(() => {
   return Math.min(100, (current / limit) * 100);
 })
 
+const BannerImages = {
+  "1": BannerLevel_1,
+  "2": BannerLevel_2,
+  "3": BannerLevel_3,
+  "4": BannerLevel_4,
+  "5": BannerLevel_5,
+  "6": BannerLevel_6,
+};
+
 const bannerLevel_img = computed(() => {
-  switch (state.vip.id) {
-    case "1":
-      return BannerLevel_1;
-      break;
-
-    case "2":
-      return BannerLevel_2;
-      break;
-
-    case "3":
-      return BannerLevel_3;
-      break;
-
-    case "4":
-      return BannerLevel_4;
-      break;
-
-    case "5":
-      return BannerLevel_5;
-      break;
-
-    case "6":
-      return BannerLevel_6;
-      break
-
-    default:
-      return null;
-      break;
-  }
+  const id = String(state.vip?.id ?? "");
+  return BannerImages[id] ?? null;
 })
 
 // const slideContent = [
@@ -96,14 +84,6 @@ var dataReady = false
 
 
 const slideContent = []
-const BannerImages = {
-  "1": BannerLevel_1,
-  "2": BannerLevel_2,
-  "3": BannerLevel_3,
-  "4": BannerLevel_4,
-  "5": BannerLevel_5,
-  "6": null,
-}
 
 const m_moneyList = [
   { "id": "1", "bonus":"0", "w_money": "588", "birth_money": "888", "ele_free": "0.6",},

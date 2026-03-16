@@ -1,6 +1,4 @@
 <script setup>
-// 這是新版的頁面，API從 /bet-order 換成 /bet-log。
-// 舊版的BetRecord_old.vue 放在 discard 資料夾
 import { inject, ref, reactive, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import HeaderCross from "@/components/Utilities/HeaderCross.vue";
@@ -21,24 +19,29 @@ const { t, locale } = useI18n();
 const showInterval = ref(false)
 const showGametype = ref(false)
 const showCurrency = ref(false)
-const activeNames = ref(['1'])
 
 
 const state = reactive({
   ActiveInterval: 4,
-  ActiveGameItem: {
-    "name": "",
-    "hall": "",
-  },
-  ActiveCurrency: 0,
+  ActiveGameItem: {},
+  ActiveCurrency: 0, 
   betRecord: [],
-  total_bet: "",
-  hallList: [{
-    "name": t("message.ALL"),
-    "hall": "",
-  },],
-  showInfo: {},
+  TypeList: [{ id: 'all', code: '', label: t("message.ALL") },], 
 })
+
+
+state.ActiveGameItem = state.TypeList[0] 
+
+
+watch(() => common.menu, () => { 
+  common.menu.forEach(item => {
+    state.TypeList.push({
+      id: item.id,
+      code: item.code,
+      label: item.title,
+    })
+  })
+}, { immediate: true })
 
 
 const IntervalText = [
@@ -65,22 +68,22 @@ const selectTime = async (val) => {
       startTime = `${start.getFullYear()}-${(start.getMonth() + 1) < 10 ? "0" + (start.getMonth() + 1) : start.getMonth() + 1}-${(start.getDate() + "").length < 2 ? "0" + start.getDate() : start.getDate()} 00:00:00`
       endTime = `${end.getFullYear()}-${(end.getMonth() + 1) < 10 ? "0" + (end.getMonth() + 1) : end.getMonth() + 1}-${(end.getDate() + "").length < 2 ? "0" + end.getDate() : end.getDate()} 23:59:59`
       break;
-    case 1:
+    case 1:  
       start.setDate(start.getDate() - 60)
       startTime = `${start.getFullYear()}-${(start.getMonth() + 1) < 10 ? "0" + (start.getMonth() + 1) : start.getMonth() + 1}-${(start.getDate() + "").length < 2 ? "0" + start.getDate() : start.getDate()} 00:00:00`
       endTime = `${end.getFullYear()}-${(end.getMonth() + 1) < 10 ? "0" + (end.getMonth() + 1) : end.getMonth() + 1}-${(end.getDate() + "").length < 2 ? "0" + end.getDate() : end.getDate()} 23:59:59`
       break;
-    case 2:
+    case 2:  
       start.setDate(start.getDate() - 30)
       startTime = `${start.getFullYear()}-${(start.getMonth() + 1) < 10 ? "0" + (start.getMonth() + 1) : start.getMonth() + 1}-${(start.getDate() + "").length < 2 ? "0" + start.getDate() : start.getDate()} 00:00:00`
       endTime = `${end.getFullYear()}-${(end.getMonth() + 1) < 10 ? "0" + (end.getMonth() + 1) : end.getMonth() + 1}-${(end.getDate() + "").length < 2 ? "0" + end.getDate() : end.getDate()} 23:59:59`
       break;
-    case 3:
+    case 3:  
       start.setDate(start.getDate() - 7)
       startTime = `${start.getFullYear()}-${(start.getMonth() + 1) < 10 ? "0" + (start.getMonth() + 1) : start.getMonth() + 1}-${(start.getDate() + "").length < 2 ? "0" + start.getDate() : start.getDate()} 00:00:00`
       endTime = `${end.getFullYear()}-${(end.getMonth() + 1) < 10 ? "0" + (end.getMonth() + 1) : end.getMonth() + 1}-${(end.getDate() + "").length < 2 ? "0" + end.getDate() : end.getDate()} 23:59:59`
       break;
-    case 4:
+    case 4:  
       start.setDate(start.getDate() - 1)
       startTime = `${start.getFullYear()}-${(start.getMonth() + 1) < 10 ? "0" + (start.getMonth() + 1) : start.getMonth() + 1}-${(start.getDate() + "").length < 2 ? "0" + start.getDate() : start.getDate()} ${start.getHours()}:${start.getMinutes()}:${start.getSeconds()}`
       endTime = `${end.getFullYear()}-${(end.getMonth() + 1) < 10 ? "0" + (end.getMonth() + 1) : end.getMonth() + 1}-${(end.getDate() + "").length < 2 ? "0" + end.getDate() : end.getDate()} 23:59:59`
@@ -95,29 +98,16 @@ const selectTime = async (val) => {
   const form = {
     startTime,
     endTime,
-    gp_code: state.ActiveGameItem.hall,
+    type: state.ActiveGameItem.code,
   };
   await fetchBetOrder(form);
 }
 
-
 const fetchBetOrder = async (form) => {
   try {
-    const res = await common.baseAjax("POST", "/user/bet-log", form);
+    const res = await common.baseAjax("POST", "/user/bet-order", form);
     if (res.code == 1) {
       state.betRecord = res.data.list;
-      res.data.hall_list.forEach(ele => {
-        state.hallList.push({
-          "name": ele.name,
-          "hall": ele.hall,   // mt、dg ...
-        })
-      });
-      if (state.betRecord.length > 0) {
-        state.betRecord.forEach((ele, idx) => {
-          state.showInfo[idx] = false
-        })
-      }
-      state.total_bet = res.data.total_bet
       common.loading = false;
     } else {
       if (res.code == 4) {
@@ -146,10 +136,6 @@ const CurrencyText = [
   { label: common.primeCoinName, icon: usdtIcon },
   { label: 'TRX', icon: trxIcon },
 ]
-
-const showInfo = (index) => {
-  state.showInfo[index] = !state.showInfo[index]
-}
 
 
 watch(() => [state.ActiveInterval, state.ActiveCurrency, state.ActiveGameItem], () => {
@@ -203,16 +189,8 @@ onMounted(() => {
             @click="showGametype = true"
           >
             <div class="left">
-              <span
-                class="text"
-                v-if="state.ActiveGameItem.name"
-              >
-                {{ state.ActiveGameItem.name }}</span>
-              <span
-                v-else
-                class="text"
-              >
-                {{ t("message.ALL") }}</span>
+              <span class="text">{{ state.ActiveGameItem.label
+              }}</span>
             </div>
             <div class="right">
               <IconDropDown />
@@ -229,79 +207,38 @@ onMounted(() => {
           </div>
 
           <div
-            class="no-data mt-4"
+            class="no-data"
             v-if="state.betRecord.length < 1"
           >
-            <!-- <van-image :src="noData" /> -->
-             <img src="../../assets/img/no-data.png" class="max-w-[80px]" alt="">
+            <van-image :src="noData" />
             <span>{{ t("message.NoBetsYet") }}</span>
           </div>
 
           <div class="table-box">
             <van-list>
               <div
-                v-if="state.betRecord.length > 0"
-                class="total-bet p-[.35rem] text-[.5rem] font-bold"
-              >總投注:
-                <span>{{ state.total_bet }}</span>
-              </div>
-              <div
                 class="table-row"
                 v-for="(item, index) in state.betRecord"
               >
                 <div class="cell title">
                   <div class="name">
-                    <p>{{ item.gp_code }}</p>
+                    <p>{{ item.name }}</p>
                   </div>
-                  <div class="profit-box">
-                    <p>有效投注: {{ item.eff_money }}</p>
-                    <div class="profit">
-                      <div
-                        class="number"
-                        :class="item.win_money > 0 ? 'green' : 'red'"
-                      >{{ item.win_money }}
-                      </div>
-                      <div class="currency">
-                        <IconUsdt />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="date-box"
-                  @click="showInfo(index)"
-                >
                   <div class="date">
                     {{ item.bet_time }}
                   </div>
-                  <span
-                    class="expand-arrow"
-                    :class="state.showInfo[index] ? 'expand-arrow-open' : ''"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 640 640"
-                      class="h-[22px] w-[22px]"
-                      fill="currentColor"
-                    >
-                      <path
-                        d="M297.4 470.6C309.9 483.1 330.2 483.1 342.7 470.6L534.7 278.6C547.2 266.1 547.2 245.8 534.7 233.3C522.2 220.8 501.9 220.8 489.4 233.3L320 402.7L150.6 233.4C138.1 220.9 117.8 220.9 105.3 233.4C92.8 245.9 92.8 266.2 105.3 278.7L297.3 470.7z"
-                      />
-                    </svg>
-                  </span>
                 </div>
-                <div
-                  class="info-box"
-                  :class="state.showInfo[index] ? 'info-box-open' : ''"
-                >
-                  <div class="line"></div>
-                  <div class="text-[.35rem]">
-                    流水編號:
-                    {{ item.order_id }}
-                  </div>
-                  <div class="text-[.35rem]">
-                    項目:
-                    {{ item.game_code }}
+                <div class="cell state">
+                  <span></span>
+                  <div class="profit">
+                    <span>{{ item.count }}x</span>
+                    <div
+                      class="number"
+                      :class="item.win_money > 0 ? 'green' : 'red'"
+                    >{{ item.win_money }} <div class="currency">
+                        <IconUsdt />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -329,8 +266,7 @@ onMounted(() => {
         <div
           class="pop-title"
           style="padding: 19px 0px;"
-        >{{ t("message.Choose") }}
-        </div>
+        >{{ t("message.Choose") }}</div>
       </div>
       <div class="pop-content">
         <div
@@ -357,7 +293,7 @@ onMounted(() => {
     <van-popup
       v-model:show="showGametype"
       position="bottom"
-      :style="{ height: '65%' }"
+      :style="{ height: '55%' }"
       style="background-color: #202125 ;border-radius: 0.16rem;"
     >
       <div class="pop-header">
@@ -371,21 +307,20 @@ onMounted(() => {
         <div
           class="pop-title"
           style="padding: 19px 0px;"
-        >{{ t("message.Choose") }}
-        </div>
+        >{{ t("message.Choose") }}</div>
       </div>
       <div class="pop-content">
         <div
           class="pop-item"
-          v-for="(item, index) in state.hallList"
+          v-for="(item, index) in state.TypeList"
           :key="index"
-          :class="state.ActiveGameItem.hall == item.hall ? 'popactive' : ''"
+          :class="state.ActiveGameItem.code == item.code ? 'popactive' : ''"
           @click="selectGame(item)"
         >
           <div class="pop-left">
-            <span class="pop-text">{{ item.name }}</span>
+            <span class="pop-text">{{ item.label }}</span>
           </div>
-          <div v-if="state.ActiveGameItem.hall == item.hall">
+          <div v-if="state.ActiveGameItem.code == item.code">
             <IconActiveIcon />
           </div>
           <div v-else>
@@ -412,8 +347,7 @@ onMounted(() => {
         <div
           class="pop-title"
           style="padding: 19px 0px;"
-        >{{ t("message.Choose") }}
-        </div>
+        >{{ t("message.Choose") }}</div>
       </div>
       <div class="pop-content">
         <div
@@ -447,7 +381,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .betRecord-wrapper {
-  height: 100%;
+  height: 100%; 
 }
 
 * {
@@ -652,34 +586,25 @@ onMounted(() => {
 
     .table-box {
       box-sizing: border-box;
-
-      .total-bet {
-        color: var(--gold-text);
-
-        span {
-          color: var(--font-color);
-        }
-      }
     }
 
     .table-box .van-list {
-      background-color: #2c154487;
+      background-color: var(--bg-range-light);
       border-radius: 0 0 .16rem .16rem;
 
       .table-row {
-        padding: .21333rem .25333rem .21333rem .28rem;
-        border-bottom: .02667rem solid var(--other-color);
+        padding: .21333rem .05333rem .21333rem .08rem;
+        border-bottom: .02667rem solid var(--bg-lighter-color2);
         display: flex;
         display: -webkit-flex;
         justify-content: flex-start;
         -webkit-justify-content: flex-start;
-        align-items: start;
-        -webkit-align-items: start;
-        flex-direction: column;
-        -webkit-flex-direction: column;
+        align-items: center;
+        -webkit-align-items: center;
+        flex-direction: row;
+        -webkit-flex-direction: row;
         flex-wrap: nowrap;
         -webkit-flex-wrap: nowrap;
-        letter-spacing: .0064rem;
       }
 
       .table-row .cell {
@@ -695,6 +620,7 @@ onMounted(() => {
         color: var(--font-color);
         font-size: .473rem;
         font-weight: 650;
+        letter-spacing: .0064rem;
       }
 
       .table-row .title {
@@ -702,82 +628,59 @@ onMounted(() => {
         display: flex;
         align-items: flex-start;
         text-align: center;
-        // padding-left: .3rem;
+        padding-left: .3rem;
         gap: 8px;
-        width: 100%;
-
-        .profit-box {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          width: 100%;
-        }
-
-        .profit-box .profit {
-          display: flex;
-          flex-direction: row;
-          justify-content: end;
-          gap: 10px;
-        }
-
-        .profit .number {
-          font-weight: 600;
-          font-size: .44rem;
-        }
-
-        .profit .number.red {
-          color: var(--error-color-dark);
-        }
-
-        .profit .number.green {
-          color: var(--success-color);
-        }
       }
 
-      .table-row .date-box {
-        width: 100%;
+      .table-row .date {
+        color: var(--font-dark-color);
+        font-weight: normal;
+        font-size: .4rem;
+      }
+
+      .table-row .state {
+        flex: 1;
+        letter-spacing: .0064rem;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        padding-right: .3rem;
 
-        .date {
-          color: var(--font-dark-color);
-          font-weight: normal;
-          font-size: .4rem;
-          align-self: center;
+        .profit {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+
+          span {
+            text-align: end;
+          }
+
+          span:first-child {
+            font-size: .42rem;
+            ;
+          }
+
+          .number {
+            display: flex;
+            flex-direction: row;
+            font-size: .45rem;
+            gap: 3px;
+          }
+
+          .number.red {
+            color: var(--error-color-dark);
+          }
+
+          .number.green {
+            color: var(--success-color);
+          }
+
+          .number .currency {
+            margin-left: .15rem;
+            transform: translateY(-2px)
+          }
         }
-
-        .expand-arrow {
-          transition: transform 0.3s ease;
-          color: var(--font-dark-color  )
-        }
-
-        .expand-arrow.expand-arrow-open {
-          transform: rotate(180deg);
-        }
       }
-
-
-      .table-row .info-box {
-        max-height: 0;
-        width: 80%;
-        overflow: hidden;
-        opacity: 0;
-        transition: all 0.2s ease;
-      }
-
-      .table-row .info-box .line {
-        height: 5px;
-        border: 0;
-        border-top: .2px;
-        border-top: .2px var(--other-color) dashed;
-      }
-
-      .table-row .info-box.info-box-open {
-        max-height: 500px;
-        opacity: 1;
-      }
-
     }
   }
 }

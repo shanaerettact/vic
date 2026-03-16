@@ -231,9 +231,10 @@ action();
           </div>
           <div
             v-else
-            class="no-data"
+            class="no-data mt-4"
           >
-            <van-image :src="noData" />
+            <!-- <van-image :src="noData" /> -->
+            <img src="../../assets/img/no-data.png" class="max-w-[80px]" alt="">
             <span>{{ t("message.HaveNoTransactionsYet_1") }}</span>
             <span>{{ t("message.HaveNoTransactionsYet_2") }}</span>
           </div>
@@ -557,7 +558,7 @@ action();
 
     .table-box {
       box-sizing: border-box;
-      background-color: #2b2d34;
+      background-color: #2c154487;
     }
 
     .table-box .van-list .table-row {

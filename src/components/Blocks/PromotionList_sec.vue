@@ -32,9 +32,16 @@ const claimPromotion = async (val) => {
     common.loading = true
     const res = await common.baseAjax("POST", "/user/activity", { id: val })
     if (res.code == 1) {
-      common.alert("", res.msg)
+      if (res.data) {
+        common.alert("", res.msg)
+        setTimeout(() => { window.location.href = res.data }, 2000)
+      }
     } else {
       common.alert("fail", res.msg)
+      if (res.data) {
+        setTimeout(() => { window.location.href = res.data }, 2000)
+
+      }
     }
   } catch (error) {
     console.log(error)
@@ -188,12 +195,11 @@ onMounted(() => {
                 {{ content.title }}
               </div>
               <div>
-                <template v-if="item.images?.length">
+                <template v-if="item.images?.length && item.images[0]">
                 <img
-                  v-for="(ListItem, ListIndex) in item.images"
-                  :key="ListItem.id || ListIndex"
+                  :key="item.images[0].id || ListIndex"
                   class="preview"
-                  :src="ListItem.img"
+                  :src="item.images[0].img"
                 />
               </template>
               </div>
@@ -221,6 +227,13 @@ onMounted(() => {
                 v-for="(content, cIdx) in (Array.isArray(item.contents) ? item.contents : (item.contents ? [item.contents] : []))"
                 :key="content.id || cIdx"
               >
+              <template v-if="item.images?.length > 1">
+                <template v-for="(image, imageIndex) in item.images.slice(1)"
+                :key="image.id || imageIndex"
+                >
+                  <img class="preview" :src="image.img" />
+                </template>
+              </template>
                 <div class="acTitle">
                   {{ content.title }}
                 </div>

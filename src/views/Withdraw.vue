@@ -145,7 +145,6 @@ const arrangeWallet = (data) => {   // 整理錢包列表
     arr.push(obj)
   });
   state.wallet_withdrawData = arr
-  console.log(111, state.wallet_withdrawData)
   // setTimeout(() => {
   //   console.log(arr)
   // }, 1000);
@@ -373,17 +372,16 @@ const submit = async () => {
               </div>
               <div>可用餘額: {{ state.balance }}</div>
             </div>
-            <div class="form-item" :class="{ 'has-input': state.money }">
+            <div class="form-item">
               <van-field
                 placeholder="請輸入金額"
                 v-model="state.money"
                 :rules="[{ validator, message: '请输入正确内容' }]"
               />
-              <div 
-              v-if="state.money > 0"
-              class="withdraw-tip">
+              <div class="withdraw-tip">
                 <span>預估出款金額 = 金額 * 出金比值</span>
-                <span>$ {{ (state.money * state.activeThirdPaymentData.rule.wd_ratio)-(state.money * state.activeThirdPaymentData.rule.sys_wd_prate * 0.01)-state.activeThirdPaymentData.rule.third_wd_frate
+                <span>{{ state.money *
+                  state.activeThirdPaymentData.rule.wd_ratio
                 }}</span>
               </div>
             </div>
@@ -598,13 +596,6 @@ const submit = async () => {
     align-items: center;
   }
 
-  :deep(.van-field__control) {
-    color: #fff !important;
-    padding: 10px !important;
-  }
-  .form-item.has-input :deep(.van-field__control) {
-    background-color: rgba(255, 255, 255, 0.1137254902) !important;
-  }
   .form-item {
     margin-top: .5rem;
   }
