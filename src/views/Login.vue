@@ -389,75 +389,91 @@ const thirdLogin = async (val) => {
     align-items: center;
     gap: 0.24rem;
     border: none;
-    border-radius: 0.16rem;
-    // Warm leather/wood layered gradient — deep mahogany to amber to sienna
+    border-radius: 0.2rem;
+    // Radial medallion: near-black espresso core, sienna mid, amber rim — matching the badge background
     background:
-      linear-gradient(
-        180deg,
-        #C8872A 0%,
-        #8B5E1A 18%,
-        #3B1F0A 42%,
-        #5C3210 58%,
-        #8B5E1A 78%,
-        #C8872A 100%
+      radial-gradient(
+        ellipse 85% 140% at 50% 110%,
+        #1A0C04 0%,
+        #2E1508 28%,
+        #5C2C0A 52%,
+        #8B4E18 70%,
+        #C8872A 88%,
+        #F0C060 100%
       );
-    // Engraved wood-grain overlay via repeating-linear-gradient
-    background-image:
-      repeating-linear-gradient(
-        92deg,
-        rgba(255, 255, 255, 0.03) 0px,
-        rgba(255, 255, 255, 0.00) 2px,
-        rgba(0, 0, 0, 0.06) 3px,
-        rgba(0, 0, 0, 0.00) 5px
-      ),
-      linear-gradient(
-        180deg,
-        #C8872A 0%,
-        #8B5E1A 18%,
-        #3B1F0A 42%,
-        #5C3210 58%,
-        #8B5E1A 78%,
-        #C8872A 100%
-      );
+    // Outer burnished-gold border ring — replicates the rope rim of the badge
+    outline: none;
+    // Layered box-shadow: inner highlight lip, dark press shadow, gold halo ring, deep drop shadow
     box-shadow:
-      0 1px 0 rgba(255, 220, 120, 0.55) inset,
-      0 -1px 0 rgba(0, 0, 0, 0.7) inset,
-      0 0 0 1.5px #6B3D0A,
-      0 0 0 2.5px rgba(200, 135, 42, 0.35),
-      0 6px 24px rgba(59, 31, 10, 0.7),
-      0 2px 6px rgba(0, 0, 0, 0.5);
+      inset 0 1.5px 0 rgba(240, 192, 96, 0.7),
+      inset 0 -1.5px 0 rgba(0, 0, 0, 0.75),
+      inset 1.5px 0 0 rgba(200, 135, 42, 0.25),
+      inset -1.5px 0 0 rgba(200, 135, 42, 0.25),
+      0 0 0 1.5px #7A4010,
+      0 0 0 3px rgba(212, 146, 42, 0.45),
+      0 0 0 4px rgba(26, 12, 4, 0.6),
+      0 8px 28px rgba(26, 12, 4, 0.8),
+      0 2px 6px rgba(0, 0, 0, 0.6);
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
     margin-bottom: 0.42rem;
 
+    // Subtle embossed top-edge highlight pseudo-element
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 5%;
+      width: 90%;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(240, 192, 96, 0.6) 30%,
+        rgba(255, 235, 160, 0.85) 50%,
+        rgba(240, 192, 96, 0.6) 70%,
+        transparent 100%
+      );
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
     &:active {
-      transform: translateY(2px) scale(0.99);
+      transform: translateY(2px) scale(0.985);
       box-shadow:
-        0 1px 0 rgba(255, 220, 120, 0.35) inset,
-        0 -1px 0 rgba(0, 0, 0, 0.7) inset,
-        0 0 0 1.5px #6B3D0A,
-        0 3px 10px rgba(59, 31, 10, 0.6);
+        inset 0 1px 0 rgba(240, 192, 96, 0.4),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.75),
+        0 0 0 1.5px #7A4010,
+        0 0 0 3px rgba(212, 146, 42, 0.3),
+        0 4px 14px rgba(26, 12, 4, 0.7);
     }
 
     .btn-text {
       font-size: 0.4rem;
       font-weight: 900;
-      // Warm golden text to contrast the dark leather bg
-      color: #FFE08A;
-      letter-spacing: 0.1rem;
+      color: #FFE48C;
+      letter-spacing: 0.12rem;
       text-transform: uppercase;
+      // Embossed golden letter effect — dual shadow: dark below, glow above
       text-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.8),
-        0 0 12px rgba(200, 135, 42, 0.5);
+        0 2px 4px rgba(0, 0, 0, 0.9),
+        0 -1px 0 rgba(255, 240, 160, 0.3),
+        0 0 16px rgba(212, 146, 42, 0.6);
+      position: relative;
+      z-index: 1;
     }
 
     .btn-arrow {
       font-size: 0.45rem;
-      color: #FFE08A;
+      color: #FFE48C;
       font-weight: 700;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+      text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.9),
+        0 0 12px rgba(212, 146, 42, 0.5);
+      position: relative;
+      z-index: 1;
     }
   }
 
@@ -566,7 +582,7 @@ const thirdLogin = async (val) => {
   }
 }
 
-// Shimmer animation — soft golden highlight sweep
+// Shimmer — burnished gold band sweep across dark leather base
 .shimmer {
   position: relative;
   overflow: hidden;
@@ -575,26 +591,30 @@ const thirdLogin = async (val) => {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 50%;
+    left: -110%;
+    width: 45%;
     height: 100%;
+    // Narrow bright-amber slit flanked by warm glow falloff
     background: linear-gradient(
-      100deg,
+      108deg,
       transparent 0%,
-      rgba(255, 224, 138, 0.25) 45%,
-      rgba(255, 240, 180, 0.4) 50%,
-      rgba(255, 224, 138, 0.25) 55%,
+      rgba(180, 100, 20, 0.12) 30%,
+      rgba(240, 192, 96, 0.38) 46%,
+      rgba(255, 235, 160, 0.62) 50%,
+      rgba(240, 192, 96, 0.38) 54%,
+      rgba(180, 100, 20, 0.12) 70%,
       transparent 100%
     );
-    animation: shimmerMove 4s 1.2s infinite ease-in-out;
+    animation: shimmerMove 4.5s 0.8s infinite linear;
     pointer-events: none;
+    z-index: 2;
   }
 }
 
 @keyframes shimmerMove {
-  0% { left: -60%; opacity: 0; }
-  5% { opacity: 1; }
-  95% { opacity: 1; }
-  100% { left: 150%; opacity: 0; }
+  0%   { left: -110%; opacity: 0; }
+  6%   { opacity: 1; }
+  94%  { opacity: 1; }
+  100% { left: 160%;  opacity: 0; }
 }
 </style>
