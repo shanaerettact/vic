@@ -390,90 +390,88 @@ const thirdLogin = async (val) => {
     gap: 0.24rem;
     border: none;
     border-radius: 0.2rem;
-    // Radial medallion: near-black espresso core, sienna mid, amber rim — matching the badge background
-    background:
-      radial-gradient(
-        ellipse 85% 140% at 50% 110%,
-        #1A0C04 0%,
-        #2E1508 28%,
-        #5C2C0A 52%,
-        #8B4E18 70%,
-        #C8872A 88%,
-        #F0C060 100%
-      );
-    // Outer burnished-gold border ring — replicates the rope rim of the badge
+    // 立體金黃漸層：頂部白金高光 → 飽和金黃中段 → 底部深琥珀壓底，產生凸起感
+    background: linear-gradient(
+      180deg,
+      #FFF5C0 0%,
+      #FFD94A 12%,
+      #F0B800 30%,
+      #D4940A 52%,
+      #B87A00 68%,
+      #C98E0E 82%,
+      #E8AB20 92%,
+      #A06800 100%
+    );
     outline: none;
-    // Layered box-shadow: inner highlight lip, dark press shadow, gold halo ring, deep drop shadow
+    // 多層陰影：頂部白光唇線 + 底部暗壓 + 金色外光暈 + 深落影
     box-shadow:
-      inset 0 1.5px 0 rgba(240, 192, 96, 0.7),
-      inset 0 -1.5px 0 rgba(0, 0, 0, 0.75),
-      inset 1.5px 0 0 rgba(200, 135, 42, 0.25),
-      inset -1.5px 0 0 rgba(200, 135, 42, 0.25),
-      0 0 0 1.5px #7A4010,
-      0 0 0 3px rgba(212, 146, 42, 0.45),
-      0 0 0 4px rgba(26, 12, 4, 0.6),
-      0 8px 28px rgba(26, 12, 4, 0.8),
-      0 2px 6px rgba(0, 0, 0, 0.6);
+      inset 0 2px 0 rgba(255, 255, 220, 0.85),
+      inset 0 -2px 0 rgba(80, 40, 0, 0.6),
+      inset 2px 0 0 rgba(255, 230, 100, 0.3),
+      inset -2px 0 0 rgba(80, 40, 0, 0.2),
+      0 0 0 1.5px #8B5E00,
+      0 0 0 3px rgba(212, 160, 20, 0.5),
+      0 4px 0 #7A4E00,
+      0 6px 20px rgba(160, 100, 0, 0.55),
+      0 2px 6px rgba(0, 0, 0, 0.4);
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
     margin-bottom: 0.42rem;
 
-    // Subtle embossed top-edge highlight pseudo-element
+    // 頂部弧形高光條 — 模擬金屬凸面反光
     &::before {
       content: '';
       position: absolute;
       top: 0;
-      left: 5%;
-      width: 90%;
-      height: 1px;
+      left: 8%;
+      width: 84%;
+      height: 45%;
       background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(240, 192, 96, 0.6) 30%,
-        rgba(255, 235, 160, 0.85) 50%,
-        rgba(240, 192, 96, 0.6) 70%,
+        180deg,
+        rgba(255, 255, 230, 0.55) 0%,
+        rgba(255, 240, 140, 0.25) 60%,
         transparent 100%
       );
-      border-radius: 50%;
+      border-radius: 0 0 60% 60%;
       pointer-events: none;
+      z-index: 1;
     }
 
     &:active {
-      transform: translateY(2px) scale(0.985);
+      transform: translateY(3px) scale(0.985);
       box-shadow:
-        inset 0 1px 0 rgba(240, 192, 96, 0.4),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.75),
-        0 0 0 1.5px #7A4010,
-        0 0 0 3px rgba(212, 146, 42, 0.3),
-        0 4px 14px rgba(26, 12, 4, 0.7);
+        inset 0 2px 0 rgba(255, 255, 220, 0.65),
+        inset 0 -1px 0 rgba(80, 40, 0, 0.5),
+        0 0 0 1.5px #8B5E00,
+        0 1px 0 #7A4E00,
+        0 3px 10px rgba(160, 100, 0, 0.45);
     }
 
     .btn-text {
       font-size: 0.4rem;
       font-weight: 900;
-      color: #FFE48C;
+      // 深棕文字在金黃底色上形成高對比的雕刻質感
+      color: #3D1F00;
       letter-spacing: 0.12rem;
       text-transform: uppercase;
-      // Embossed golden letter effect — dual shadow: dark below, glow above
       text-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.9),
-        0 -1px 0 rgba(255, 240, 160, 0.3),
-        0 0 16px rgba(212, 146, 42, 0.6);
+        0 1px 0 rgba(255, 240, 160, 0.6),
+        0 -1px 0 rgba(0, 0, 0, 0.25);
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
 
     .btn-arrow {
       font-size: 0.45rem;
-      color: #FFE48C;
+      color: #3D1F00;
       font-weight: 700;
       text-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.9),
-        0 0 12px rgba(212, 146, 42, 0.5);
+        0 1px 0 rgba(255, 240, 160, 0.6),
+        0 -1px 0 rgba(0, 0, 0, 0.25);
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
   }
 
@@ -582,7 +580,7 @@ const thirdLogin = async (val) => {
   }
 }
 
-// Shimmer — burnished gold band sweep across dark leather base
+// Shimmer — 白色強光掃射，在金黃底色上呈現明顯的反光感
 .shimmer {
   position: relative;
   overflow: hidden;
@@ -591,30 +589,29 @@ const thirdLogin = async (val) => {
     content: '';
     position: absolute;
     top: 0;
-    left: -110%;
-    width: 45%;
+    left: -120%;
+    width: 40%;
     height: 100%;
-    // Narrow bright-amber slit flanked by warm glow falloff
     background: linear-gradient(
       108deg,
       transparent 0%,
-      rgba(180, 100, 20, 0.12) 30%,
-      rgba(240, 192, 96, 0.38) 46%,
-      rgba(255, 235, 160, 0.62) 50%,
-      rgba(240, 192, 96, 0.38) 54%,
-      rgba(180, 100, 20, 0.12) 70%,
+      rgba(255, 255, 255, 0.08) 28%,
+      rgba(255, 255, 255, 0.55) 46%,
+      rgba(255, 255, 255, 0.75) 50%,
+      rgba(255, 255, 255, 0.55) 54%,
+      rgba(255, 255, 255, 0.08) 72%,
       transparent 100%
     );
-    animation: shimmerMove 4.5s 0.8s infinite linear;
+    animation: shimmerMove 3.5s 0.6s infinite linear;
     pointer-events: none;
-    z-index: 2;
+    z-index: 3;
   }
 }
 
 @keyframes shimmerMove {
-  0%   { left: -110%; opacity: 0; }
-  6%   { opacity: 1; }
-  94%  { opacity: 1; }
+  0%   { left: -120%; opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
   100% { left: 160%;  opacity: 0; }
 }
 </style>
