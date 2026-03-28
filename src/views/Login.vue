@@ -390,36 +390,74 @@ const thirdLogin = async (val) => {
     gap: 0.24rem;
     border: none;
     border-radius: 0.16rem;
-    background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+    // Warm leather/wood layered gradient — deep mahogany to amber to sienna
+    background:
+      linear-gradient(
+        180deg,
+        #C8872A 0%,
+        #8B5E1A 18%,
+        #3B1F0A 42%,
+        #5C3210 58%,
+        #8B5E1A 78%,
+        #C8872A 100%
+      );
+    // Engraved wood-grain overlay via repeating-linear-gradient
+    background-image:
+      repeating-linear-gradient(
+        92deg,
+        rgba(255, 255, 255, 0.03) 0px,
+        rgba(255, 255, 255, 0.00) 2px,
+        rgba(0, 0, 0, 0.06) 3px,
+        rgba(0, 0, 0, 0.00) 5px
+      ),
+      linear-gradient(
+        180deg,
+        #C8872A 0%,
+        #8B5E1A 18%,
+        #3B1F0A 42%,
+        #5C3210 58%,
+        #8B5E1A 78%,
+        #C8872A 100%
+      );
     box-shadow:
-      0 4px 16px rgba(191, 149, 63, 0.4),
-      0 0 0 1px rgba(240, 205, 79, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      0 1px 0 rgba(255, 220, 120, 0.55) inset,
+      0 -1px 0 rgba(0, 0, 0, 0.7) inset,
+      0 0 0 1.5px #6B3D0A,
+      0 0 0 2.5px rgba(200, 135, 42, 0.35),
+      0 6px 24px rgba(59, 31, 10, 0.7),
+      0 2px 6px rgba(0, 0, 0, 0.5);
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     margin-bottom: 0.42rem;
 
     &:active {
-      transform: translateY(2px);
+      transform: translateY(2px) scale(0.99);
       box-shadow:
-        0 2px 8px rgba(191, 149, 63, 0.35),
-        0 0 0 1px rgba(240, 205, 79, 0.25);
+        0 1px 0 rgba(255, 220, 120, 0.35) inset,
+        0 -1px 0 rgba(0, 0, 0, 0.7) inset,
+        0 0 0 1.5px #6B3D0A,
+        0 3px 10px rgba(59, 31, 10, 0.6);
     }
 
     .btn-text {
       font-size: 0.4rem;
       font-weight: 900;
-      color: #0a0a12;
-      letter-spacing: 0.08rem;
+      // Warm golden text to contrast the dark leather bg
+      color: #FFE08A;
+      letter-spacing: 0.1rem;
       text-transform: uppercase;
+      text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.8),
+        0 0 12px rgba(200, 135, 42, 0.5);
     }
 
     .btn-arrow {
       font-size: 0.45rem;
-      color: #0a0a12;
+      color: #FFE08A;
       font-weight: 700;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     }
   }
 
@@ -528,7 +566,7 @@ const thirdLogin = async (val) => {
   }
 }
 
-// Shimmer animation
+// Shimmer animation — soft golden highlight sweep
 .shimmer {
   position: relative;
   overflow: hidden;
@@ -538,20 +576,25 @@ const thirdLogin = async (val) => {
     position: absolute;
     top: 0;
     left: -100%;
-    width: 60%;
+    width: 50%;
     height: 100%;
     background: linear-gradient(
-      105deg,
-      transparent 20%,
-      rgba(255, 255, 255, 0.3) 50%,
-      transparent 80%
+      100deg,
+      transparent 0%,
+      rgba(255, 224, 138, 0.25) 45%,
+      rgba(255, 240, 180, 0.4) 50%,
+      rgba(255, 224, 138, 0.25) 55%,
+      transparent 100%
     );
-    animation: shimmerMove 3s 1.5s infinite;
+    animation: shimmerMove 4s 1.2s infinite ease-in-out;
+    pointer-events: none;
   }
 }
 
 @keyframes shimmerMove {
-  0% { left: -60%; }
-  100% { left: 140%; }
+  0% { left: -60%; opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { left: 150%; opacity: 0; }
 }
 </style>
